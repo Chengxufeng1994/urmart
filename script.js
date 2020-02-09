@@ -179,22 +179,28 @@ function buildMonth(year, monthNum, opts) {
 
 const submitBtn = document.querySelector('[data-action="submit"]');
 submitBtn.addEventListener('click', initYearData);
+// 獲取今年是哪一年
+var currentYear = new Date().getFullYear();
 
 function initYearData() {
   var calendar = document.getElementById('calendar');
+  var errorMessage = document.createElement('div');
+  errorMessage.classList.add('alert', 'alert-danger');
+  errorMessage.innerText = '請輸入正確年份';
+
   calendar.innerHTML = '';
   // 選擇form表單裡的id=selectYear
   let selectYear = document.getElementById('selectYear');
+  // 獲取表單的值
   let getYear = Number(selectYear.value);
-  // 獲取今年是哪一年
-  var currentYear = new Date().getFullYear();
+
   if (getYear === 0) {
     buildYearCalendar(calendar, currentYear);
-  } else {
+  } else if (getYear <= 9999 && getYear >= 1) {
     buildYearCalendar(calendar, getYear);
+  } else {
+    calendar.appendChild(errorMessage);
   }
 }
-
-var currentYear = new Date().getFullYear();
 
 buildYearCalendar(calendar, currentYear);
